@@ -120,9 +120,10 @@ public class CandyCrush {
 				if(matrica[i][j] == matrica[i][j-1]) {
 					brojac++;
 					if(brojac >= 3 && j == dimenzijaY-1) {
+						bodovi += brojac;
 						matrica[i][j] = 0;
 						while(brojac >= 1) {
-							matrica[i][j-brojac] = 0;
+							matrica[i][j-brojac+1] = 0;
 							brojac--;
 						}
 						brojac = 1;
@@ -131,6 +132,7 @@ public class CandyCrush {
 				}
 				else {
 					if(brojac >= 3) {
+						bodovi += brojac;
 						matrica[i][j-1] = 0;
 						while(brojac > 1) {
 							matrica[i][j-brojac] = 0;
@@ -139,6 +141,7 @@ public class CandyCrush {
 						brojac = 1;
 						zaBrisanje = true;
 					}
+					brojac = 1;
 				}				
 			}
 		}
@@ -148,9 +151,10 @@ public class CandyCrush {
 				if(matrica[j][i] == matrica[j-1][i]) {
 					brojac++;
 					if(brojac >= 3 && j == dimenzijaX-1) {
+						bodovi += brojac;
 						matrica[j][i] = 0;
 						while(brojac >= 1) {
-							matrica[j-brojac][i] = 0;
+							matrica[j-brojac+1][i] = 0;
 							brojac--;
 						}
 						brojac = 1;
@@ -159,6 +163,7 @@ public class CandyCrush {
 				}
 				else {
 					if(brojac >= 3) {
+						bodovi += brojac;
 						matrica[j-1][i] = 0;
 						while(brojac > 1) {
 							matrica[j-brojac][i] = 0;
@@ -167,6 +172,7 @@ public class CandyCrush {
 						brojac = 1;
 						zaBrisanje = true;
 					}
+					brojac = 1;
 				}
 			}
 		}
