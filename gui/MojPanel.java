@@ -1,0 +1,98 @@
+package Gui;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JPanel;
+
+import Logika.CandyCrush;
+
+public class MojPanel extends JPanel{
+	CandyCrush igra;
+	JPanel prikazTabele;
+	Bombona[][] dugmad;
+	int brojKlikova;
+	int[] potez;
+	
+	public MojPanel(int dimX, int dimY, int brPoteza) {
+		super();
+		brojKlikova = 0;
+		potez = new int[4];
+		igra = new CandyCrush(dimX, dimY, brPoteza);
+		setLayout(new BorderLayout());
+		setVisible(true);
+		prikazTabele = new JPanel();
+		add(prikazTabele, BorderLayout.CENTER);
+		prikazTabele.setLayout(new GridLayout(dimX, dimY));
+		dugmad = new Bombona[dimX][dimY];
+		for(int i = 0; i<dimX; i++) {
+			for(int j = 0; j<dimY; j++) {
+				dugmad[i][j] = new Bombona(igra.tabelaStanja()[i][j], i, j);
+				prikazTabele.add(dugmad[i][j]);
+				int red = i;
+				int kolona = j;
+				dugmad[i][j].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						brojKlikova++;
+						if(brojKlikova == 1) {
+							potez[0] = red;
+							potez[1] = kolona;
+						}
+						if(brojKlikova == 2) {
+							potez[2] = red;
+							potez[3] = kolona;
+							brojKlikova = 0;
+							igra.igrajPotez(potez);
+							osvjeziStanje();
+						}
+						
+					}
+				});
+			}
+		}
+	}
+	
+	public void osvjeziStanje() {
+		for(int i = 0; i<dugmad.length; i++) {
+			for(int j = 0; j<dugmad[i].length; j++) {
+				dugmad[i][j].promjeniBoju(igra.tabelaStanja()[i][j]);
+			}
+		}
+	}
+	
+	class MojMouseListener implements MouseListener{
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			System.out.println(e.getSource());
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated metMojMouseListenerhod stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+}
