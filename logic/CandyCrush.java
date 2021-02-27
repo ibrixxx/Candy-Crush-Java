@@ -3,23 +3,31 @@ package Logika;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CandyCrush {
-	private int brojFigura;
+	private final static int brojFigura = 5;
 	private int dimenzijaX, dimenzijaY;
 	private int[][] matrica;
-	private int brojPoteza; 
+	private int brojPoteza;
+	private int brojPotezaUkupno;
 	private int bodovi;
+	private final static int gornjaGranica = 12;
+	private final static int donjaGranica = 4;
 	
 	public CandyCrush(int dimX, int dimY, int potezi) {
-		brojFigura = 5;
 		brojPoteza = potezi;
+		brojPotezaUkupno = brojPoteza;
 		bodovi = 0;
-		if(dimX > 12 || dimX < 1)
+		if(dimX > gornjaGranica || dimX < donjaGranica)
 			dimX = 8;
-		if(dimY < 1 || dimY > 12)
+		if(dimY < donjaGranica || dimY > gornjaGranica)
 			dimY = 8;
 		dimenzijaX = dimX;
 		dimenzijaY = dimY;
 		matrica = new int[dimenzijaX][dimenzijaY];
+		randomTabela();
+	}
+	
+	
+	public void randomTabela() {
 		for(int i = 0; i<dimenzijaX; i++) {
 			for(int j = 0; j<dimenzijaY; j++) {
 				int randomNum = ThreadLocalRandom.current().nextInt(1, brojFigura + 1);
@@ -31,9 +39,25 @@ public class CandyCrush {
 	}
 	
 	
+	public int dajBodove() {
+		return bodovi;
+	}
+	
+	
+	public int dajPoteze() {
+		return brojPoteza;
+	}
+	
+	
+	public int dajPotezeUkupno() {
+		return brojPotezaUkupno;
+	}
+	
+	
 	public int[][] tabelaStanja() {
 		return matrica;
 	}
+	
 	
 	public boolean kraj() {
 		if(brojPoteza > 0)
