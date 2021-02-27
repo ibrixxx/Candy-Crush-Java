@@ -18,12 +18,16 @@ public class MojPanel extends JPanel{
 	Bombona[][] dugmad;
 	int brojKlikova;
 	int[] potez;
+	InfoPanel info;
 	
-	public MojPanel(int dimX, int dimY, int brPoteza) {
+	public MojPanel(CandyCrush cc, InfoPanel ip) {
 		super();
 		brojKlikova = 0;
 		potez = new int[4];
-		igra = new CandyCrush(dimX, dimY, brPoteza);
+		info = ip;
+		igra = cc;
+		int dimX = igra.tabelaStanja().length;
+		int dimY = igra.tabelaStanja()[0].length;
 		setLayout(new BorderLayout());
 		setVisible(true);
 		prikazTabele = new JPanel();
@@ -37,18 +41,21 @@ public class MojPanel extends JPanel{
 				int red = i;
 				int kolona = j;
 				dugmad[i][j].addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
-						brojKlikova++;
-						if(brojKlikova == 1) {
-							potez[0] = red;
-							potez[1] = kolona;
-						}
-						if(brojKlikova == 2) {
-							potez[2] = red;
-							potez[3] = kolona;
-							brojKlikova = 0;
-							igra.igrajPotez(potez);
-							osvjeziStanje();
+						if(!igra.kraj()) {
+							brojKlikova++;
+							if(brojKlikova == 1) {
+								potez[0] = red;
+								potez[1] = kolona;
+							}
+							if(brojKlikova == 2) {
+								potez[2] = red;
+								potez[3] = kolona;
+								brojKlikova = 0;
+								igra.igrajPotez(potez);
+								osvjeziStanje();
+							}
 						}
 						
 					}
@@ -63,36 +70,7 @@ public class MojPanel extends JPanel{
 				dugmad[i][j].promjeniBoju(igra.tabelaStanja()[i][j]);
 			}
 		}
+		info.azuriraj();
 	}
-	
-	class MojMouseListener implements MouseListener{
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(e.getSource());
-		}
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated metMojMouseListenerhod stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
 }
