@@ -10,13 +10,6 @@ public class IgrajCandyCrush {
 		
 		Scanner s = new Scanner(System.in);
 		
-		/*int redovi, kolone, potezi;
-		System.out.println("Unesite dimenzije poligona: ");
-		
-		redovi = s.nextInt();
-		kolone = s.nextInt();
-		System.out.println("Unesite broj poteza: ");
-		potezi = s.nextInt();*/
 		CandyCrush cc = new CandyCrush(6, 6, 10);
 		prikaziStanje(cc);
 		while(!cc.kraj()) {
