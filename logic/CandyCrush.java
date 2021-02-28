@@ -1,6 +1,11 @@
 package Logika;
 
 import java.util.concurrent.ThreadLocalRandom;
+/**
+ * 
+ * @author ibrahim
+ *
+ */
 
 public class CandyCrush {
 	private final static int brojFigura = 5;
@@ -12,6 +17,14 @@ public class CandyCrush {
 	private final static int gornjaGranica = 12;
 	private final static int donjaGranica = 4;
 	
+	
+	/**
+	 * Konstruktor sa tri parametra koji postavlja
+	 * odgovarajuće dimenzije igrice i broj poteza.
+	 * @param dimX int broj redova.
+	 * @param dimY int broj kolona.
+	 * @param potezi int ukupan broj poteza za igranje.
+	 */
 	public CandyCrush(int dimX, int dimY, int potezi) {
 		brojPoteza = potezi;
 		brojPotezaUkupno = brojPoteza;
@@ -26,7 +39,11 @@ public class CandyCrush {
 		randomTabela();
 	}
 	
-	
+	/**
+	 * Pomoćna metoda za generisanje random bomobona za igru.
+	 * Poziva metodu za provjeru stanja nad generisanim poljem, 
+	 * te spušta bombone ukoliko dođe do brisanja bobmbona.
+	 */
 	public void randomTabela() {
 		for(int i = 0; i<dimenzijaX; i++) {
 			for(int j = 0; j<dimenzijaY; j++) {
@@ -38,34 +55,72 @@ public class CandyCrush {
 			spustiBombone();
 	}
 	
+	/**
+	 * Metoda za ponovno pokretanje trenutne igrice.
+	 */
+	public void restart() {
+		brojPoteza = brojPotezaUkupno;
+		bodovi = 0;
+		randomTabela();
+	}
 	
+	/**
+	 * Postavlja bodove na vrijednost parametra.
+	 * @param bod int novi broj bodova.
+	 */
+	public void postaviBodove(int bod) {
+		bodovi = bod;
+	}
+	
+	/**
+	 * Metoda koja vraća trenutni broj bodova.
+	 * @return int broj bodova.
+	 */
 	public int dajBodove() {
 		return bodovi;
 	}
 	
-	
+	/**
+	 * Metoda koja vraća preostali broj poteza.
+	 * @return int preostali broj poteza.
+	 */
 	public int dajPoteze() {
 		return brojPoteza;
 	}
 	
-	
+	/**
+	 * Metoda koja vraća maksimalan broj poteza koji
+	 * se mogu odigrati u jednoj partij.
+	 * @return int ukupan broj poteza
+	 */
 	public int dajPotezeUkupno() {
 		return brojPotezaUkupno;
 	}
 	
-	
+	/**
+	 * Metoda koja daje trenutno stanje polja u igrici.
+	 * @return int[][] matrica trenutnog stanja
+	 */
 	public int[][] tabelaStanja() {
 		return matrica;
 	}
 	
-	
+	/**
+	 * Metoda koja provjerava da li je kraj igrice.
+	 * @return boolean da li je kraj.
+	 */
 	public boolean kraj() {
 		if(brojPoteza > 0)
 			return false;
 		return true;
 	}
 	
-	
+	/**
+	 * Metoda za provjeru validnosti trenutnog poteza.
+	 * @param potez int[] niz od četiri elementa gjde prva dva su indeksi prve, 
+	 * a druga dva indeksi druge bombone za zamjenu, gjde prvo ide indeks reda pa indeks kolone.
+	 * @return booelan da li je validan potez.
+	 */
 	public boolean provjeriPotez(int[] potez) {
 		int x1, y1, x2, y2;
 		x1 = potez[0]; y1 = potez[1]; x2 = potez[2]; y2 = potez[3];
@@ -83,7 +138,13 @@ public class CandyCrush {
 			return true;
 	}
 	
-	
+	/**
+	 * Metoda koja vrši zamjenu izabranih polja.
+	 * Uništava polja ako treba ili vraća na prijašnju poziciju.
+	 * Ukoliko uništi polja, spušta gornja polja na mjesta uništenih polja.
+	 * @param potez int[] niz od četiri elementa gjde prva dva su indeksi prve, 
+	 * a druga dva indeksi druge bombone za zamjenu, gjde prvo ide indeks reda pa indeks kolone.
+	 */
 	public void igrajPotez(int[] potez) {
 		if(provjeriPotez(potez)) {
 			int temp = matrica[potez[0]][potez[1]];
@@ -104,7 +165,9 @@ public class CandyCrush {
 		brojPoteza--;
 	}
 	
-	
+	/**
+	 * Metoda za spuštanje polja iznad uništenih polja na njihovo mjesto.
+	 */
 	public void spustiBombone() {
 		for(int i = 0; i<dimenzijaY; i++) {
 			int granica = 0;
@@ -134,7 +197,10 @@ public class CandyCrush {
 		ubaciNoveBombone();
 	}
 	
-	
+	/**
+	 * Metoda koja na prazna mjesta nastala nakon 
+	 * uništavanja i spuštanja generiše nove bombone. 
+	 */
 	public void ubaciNoveBombone() {
 		for(int i = 0; i<dimenzijaX; i++) {
 			for(int j = 0; j<dimenzijaY; j++) {
@@ -147,7 +213,11 @@ public class CandyCrush {
 		}
 	}
 	
-	
+	/**
+	 * Metoda koja gleda postoje li polja za uništavanje vertikalno i horizontalno.
+	 * Ukoliko postoje, označava ih.
+	 * @return boolean da li postoje polja za uništavanje.
+	 */
 	public boolean provjeriStanje() {
 		boolean zaBrisanje = false;
 		for(int i = 0; i<dimenzijaX; i++) {
