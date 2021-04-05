@@ -213,17 +213,11 @@ public class CandyCrush {
 		}
 	}
 	
-	/**
-	 * Metoda koja gleda postoje li polja za uništavanje vertikalno i horizontalno.
-	 * Ukoliko postoje, označava ih.
-	 * @return boolean da li postoje polja za uništavanje.
-	 */
-	public boolean provjeriStanje() {
-		boolean zaBrisanje = false;
+	private boolean provjeriRedove(boolean zaBrisanje, int[][] mat) {
 		for(int i = 0; i<dimenzijaX; i++) {
 			int brojac = 1;
 			for(int j = 1; j<dimenzijaY; j++) {
-				if(matrica[i][j] == matrica[i][j-1]) {
+				if(mat[i][j] == mat[i][j-1]) {
 					brojac++;
 					if(brojac >= 3 && j == dimenzijaY-1) {
 						bodovi += brojac;
@@ -251,10 +245,15 @@ public class CandyCrush {
 				}				
 			}
 		}
+		return zaBrisanje;
+	}
+	
+	
+	private boolean provjeriKolone(boolean zaBrisanje, int[][] mat) {
 		for(int i = 0; i<dimenzijaY; i++) {
 			int brojac = 1;
 			for(int j = 1; j<dimenzijaX; j++) {
-				if(matrica[j][i] == matrica[j-1][i]) {
+				if(mat[j][i] == mat[j-1][i]) {
 					brojac++;
 					if(brojac >= 3 && j == dimenzijaX-1) {
 						bodovi += brojac;
@@ -282,6 +281,28 @@ public class CandyCrush {
 				}
 			}
 		}
+		return zaBrisanje;
+	}
+	
+	
+	/**
+	 * Metoda koja gleda postoje li polja za uništavanje vertikalno i horizontalno.
+	 * Ukoliko postoje, označava ih.
+	 * @return boolean da li postoje polja za uništavanje.
+	 */
+	public boolean provjeriStanje() {
+		boolean zaBrisanje = false;
+		
+		int[][] pom = new int[dimenzijaX][dimenzijaY];
+		//int [][]pom = matrica.clone();
+		for(int i = 0; i<dimenzijaX; i++)
+			for(int j = 0; j<dimenzijaY; j++)
+				pom[i][j] = matrica[i][j];
+		
+		zaBrisanje = provjeriRedove(zaBrisanje, pom);
+		
+		zaBrisanje = provjeriKolone(zaBrisanje, pom);
+		
 		return zaBrisanje;
 	}
 }
